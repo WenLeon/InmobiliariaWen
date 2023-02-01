@@ -1,0 +1,47 @@
+/* ----------------------------------------------------------------------- */
+/*                          CABECERA                                     */
+
+header {
+    text-align: center;
+    line-height: 30px;
+    font-size: 30px;
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+    color: #3E3E3E;
+    text-transform: uppercase;
+    height: 20%;
+}
+
+/* ----------------------------------------------------------------------- */
+/*                               CUERPO                                   */
+
+/* Contenedor del body */
+#contenedor {
+    width: 100%;
+    height: 80vh;
+    background-image: url('BO/imagenes/inmobiliaria.jpg');
+    /* background-color: antiquewhite; */
+    background-size: cover;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+
+h3 {
+    color: lightslategrey;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* ----------------------------------------------------------------------- */
+/*                           PIE DE PAGINA                                 */
+
+
+footer {
+    text-align: center;
+    color: #3E3E3E;
+    padding: 1%;
+}
