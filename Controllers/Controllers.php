@@ -14,13 +14,10 @@ class controllers
         include '../Index.php';
 
         if (isset($_POST['ingresar'])) {
-         echo"hollaaaaaaaaslldkalskdsa";
             $user= $_POST['username'];
             $pssw=$_POST['password'];
-
             $admin = new Login();
             $admin->login($user,$pssw);
-            echo"aqui estoy ";
         }
     }
 

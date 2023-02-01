@@ -73,7 +73,7 @@ class Pagination
 function printPagination($pagination, $registro)
 {
 
-        echo "Hola";
+ 
         if (count($registro) > 0) {
           echo "<table>
           <thead>
