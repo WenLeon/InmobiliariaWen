@@ -70,8 +70,8 @@
 
         <div class="login">
 
-            <div class="formularios">
-                <form method="post" action="Controllers/Controllers.php" >
+            <div class="formularios" >
+                <form method="post" action="Controllers/Controller.php">
                     <h3>Ingresa a inmobiliaria</h3>
                     <input type="text" id="username" name="username" placeholder="Usuario">
                     <br>
@@ -93,10 +93,5 @@
 
 </html>
 
-<?php 
-
-// include 'Controllers/Controllers.php';
 
 
-// $login= new controllers();
-// $login->comprobarLogin();

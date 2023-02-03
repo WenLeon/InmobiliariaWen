@@ -62,19 +62,20 @@
             font-size: medium;
             line-height: 30px;
             padding: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            
         }
 
-        button {
-            float: right;
-            line-height: 30px;
-            padding-right: 20px;
-
-        }
+     
         .tabla{
             width: 80%;
             height: 80%;
             background-color: #FCD8D4;
         }
+     
+      
     </style>
 
 </head>
@@ -93,8 +94,10 @@
             <header>
                 <h2>Inmobiliaria Espacio ideal</h2>
                 <div class="encabezado">
-                    <p>Bienvenido: <?php echo $_SESSION['usuario']; ?>
-                        Última conexión: <?php echo $_COOKIE['ultimo_login']; ?>
+                    <span>Bienvenido: <?php echo $_SESSION['usuario']; ?></span>
+                       
+                        <span> <a href="">Añadir un nuevo usuario</a></span>
+                        <span>Última conexión: <?php echo $_COOKIE['ultimo_login']; ?></span>
                         <button><a href="../Models/logout.php">Desconectarse</a></button>
                 </div>
             </header>

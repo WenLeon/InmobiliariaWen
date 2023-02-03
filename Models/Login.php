@@ -14,7 +14,7 @@ class Login
     //Login de usuario
     function login($usuario, $clave)
     {
-
+        session_start();
         try {
             $conn = $this->conn->conection();
             $sql = "SELECT password FROM usuarios where  id_usuario = ?";
@@ -24,14 +24,17 @@ class Login
             $contra = $stmt->fetch(PDO::FETCH_ASSOC);
 
 
-            $clave = password_hash($clave, PASSWORD_DEFAULT);
-
             if ($contra['password'] != null) {
+                // if (password_verify($contra['password'],$clave)) {
 
-                if (password_verify($contra['password'], $clave)) {
-                    $_SESSION['usuario'] = $usuario;
-                    $msg = "es correcto";
-                    header("Location:../Views/Listado.php?msg=$msg");
+                if (($contra['password'] == $clave)) {
+                    if ($usuario == 'admin') {
+                        $_SESSION['usuario'] = $usuario;
+                        header("Location:../Views/ListadoAdmin.php?");
+                    } else {
+                        $_SESSION['usuario'] = $usuario;
+                        header("Location:../Views/Listado.php?");
+                    }
                 } else {
                     $msg = "Contraseña mal introducida";
                     header("Location:../index.php?msg=$msg");
