@@ -71,14 +71,14 @@
         <div class="login">
 
             <div class="formularios" >
-                <form method="post" action="Controllers/Controller.php">
+                <form method="post" action="Controllers/loginController.php">
                     <h3>Ingresa a inmobiliaria</h3>
                     <input type="text" id="username" name="username" placeholder="Usuario">
                     <br>
 
                     <input type="password" id="password" name="password" placeholder="Contraseña">
                     <br><br>
-                    <p><strong><?= $_GET['msg'] ?></strong></p> <!--Mensaje -->
+                    <p><strong><?=$_GET['msg'] ?></strong></p> <!--Mensaje -->
 
                     <input type="submit" name='ingresar' value="Ingresar">
                 </form>

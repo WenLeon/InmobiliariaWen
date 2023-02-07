@@ -1,3 +1,11 @@
+<?php
+session_start();
+// Comprobamos si no existe el usuario, lo redirigimos al index 
+if (!isset($_SESSION['usuario'])) {
+    header("Location:../Index.php");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,12 +21,14 @@
             width: 100%;
             border-collapse: collapse;
         }
+
         th,
         td {
             border: 1px solid black;
             padding: 8px;
             text-align: left;
         }
+
         th {
             background-color: #FCD8D4;
         }
@@ -45,37 +55,23 @@
         .contenedor {
             width: 100%;
             height: 80vh;
-            background-color: antiquewhite;
+            background-image: url('../Views/imagenes/inmobiliaria.jpg');
             background-size: cover;
             display: flex;
             justify-content: center;
             align-items: center
         }
 
-      
 
-        .encabezado {
-            width: 100%;
-            height: 8vh;
-            background-color: lightsteelblue;
-            text-align: left;
-            font-size: medium;
-            line-height: 30px;
-            padding: 5px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            
-        }
-
-     
-        .tabla{
+        .tabla {
             width: 80%;
             height: 80%;
-            background-color: #FCD8D4;
+            background-color: lavenderblush;
         }
-     
-      
+
+        .botones {
+            width: 80px;
+        }
     </style>
 
 </head>
@@ -84,25 +80,37 @@
 
     <div>
         <?php
-        include '../Models/Pagination.php';
-        session_start();
-        $pagination = new Pagination();
+        include '../Models/UserModelListado.php';
+
+        $pagination = new Pagination('usuarios');
         $registro = $pagination->getData($_GET['page'] ?? 1);
 
         if (count($registro) > 0) {
         ?>
-            <header>
+             <!-- ------------------------------------------------------------------------------------ -->
+        <!-- Todo el header -->
+        <header>
                 <h2>Inmobiliaria Espacio ideal</h2>
                 <div class="encabezado">
                     <span>Bienvenido: <?php echo $_SESSION['usuario']; ?></span>
-                       
-                        <span> <a href="">Añadir un nuevo usuario</a></span>
-                        <span>Última conexión: <?php echo $_COOKIE['ultimo_login']; ?></span>
-                        <button><a href="../Models/logout.php">Desconectarse</a></button>
+                    <span> <a href="../Views/ListadoVivienda.php">Inicio</a></span>
+                    <span> <a href="../Views/insertarVivienda.php">Insertar vivienda</a></span>
+                    <span> <a href="../Views/buscarVivienda.php">Buscar vivienda</a></span>
+
+                    <!-- Bonton de gestion de usuarios solo para el admin  -->
+                    <?php
+                    if (isset($_SESSION['usuario']) && $_SESSION['usuario'] == "admin") {
+                        echo '<span> <a href="../Views/UserView.php">Añadir un nuevo usuario</a></span>';
+                        echo '<span> <a href="../Views/ListadoUsuario.php">Borrar un usuario</a></span>';
+                    } ?>
+                    <!-- Bonton de ultima desconexion  -->
+                    <span>Última conexión: <?php echo $_COOKIE['lastLogin']; ?></span>
+                    <!-- Boton de cerrar session  -->
+                    <button><a href="../Models/logout.php">Cerrar sesion</a></button>
                 </div>
             </header>
+            <!-- ------------------------------------------------------------------------------------ -->
             <div class="contenedor">
-
                 <div class="tabla">
                     <table>
                         <thead>
@@ -123,38 +131,34 @@
                                 <tr>
                                     <?php
                                     foreach ($fila as $key => $valor) {
-                                        if ($key == "foto") {
-                                            echo "<td><a href='/Proyectos_2/InmobiliariaW/Views/imagenes/fotos/" . $valor . "'>" . $valor . "</a></td>";
-                                        } else {
-                                            echo "<td>" . $valor . "</td>";
-                                        }
+
+                                        echo "<td>" . $valor . "</td>";
                                     }
                                     ?>
-                                    <td>
-                                        <button>
-                                            <a href='borrar.php?id=<?php echo $fila['id']; ?>'>Borrar</a>
-                                        </button>
-                                        <button>
-                                            <a href='modificar.php?id=<?php echo $fila['id']; ?>'>Modificar</a>
-                                        </button>
+                                    <td class="botones">
+                                        <?php
+
+                                        if ($fila['id_usuario'] != 'admin') {
+                                            echo "<form action='../Controllers/userController.php' method='post'>
+                                            <input type='hidden' name='id_usuario' value='" . $fila['id_usuario'] . "'>"
+                                            ?>
+                                                  <input type="submit" value="Borrar" name="borrar">
+                                        </form>
+                                        <?php }
+                                        ?>
+
                                     </td>
                                 </tr>
-                            <?php
+                        <?php
                             }
-                            ?>
+                        }
+                        ?>
                         </tbody>
                     </table>
                     <?php $pagination->getPagination(); ?>
                 </div>
             </div>
             <footer><span>COPYRIGHT © 2023 Wendy León Barragán. | ALL RIGHTS RESERVED</span></footer>
-        <?php
-        } else {
-            echo "No se encontraron registros";
-        }
-        ?>
-
-    </div>
 
 </body>
 

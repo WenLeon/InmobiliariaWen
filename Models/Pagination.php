@@ -14,7 +14,7 @@ class Pagination
 
 
         $pagination =
-            "SELECT viviendas.id, viviendas.tipo, viviendas.zona, viviendas.ndormitorios, viviendas.tamano, fotos.foto FROM viviendas LEFT JOIN fotos ON viviendas.id = fotos.id_vivienda order by viviendas.fecha_anuncio DESC;";
+            "SELECT viviendas.id, viviendas.tipo, viviendas.zona, viviendas.ndormitorios, viviendas.tamano, viviendas.precio, fotos.foto FROM viviendas LEFT JOIN fotos ON viviendas.id = fotos.id_vivienda order by viviendas.fecha_anuncio DESC;";
         $stmt = $this->conn->conection()->prepare($pagination);
         $stmt->execute();
         $num_elementos = $stmt->rowCount();
@@ -23,7 +23,7 @@ class Pagination
 
         $offset = ($page - 1) * $num_ele;
 
-        $pagination2 = "SELECT viviendas.id, viviendas.tipo, viviendas.zona, viviendas.ndormitorios, viviendas.tamano, fotos.foto FROM viviendas LEFT JOIN fotos ON viviendas.id = fotos.id_vivienda order by viviendas.fecha_anuncio DESC LIMIT " . $offset . "," . $num_ele;
+        $pagination2 = "SELECT viviendas.id, viviendas.tipo, viviendas.zona, viviendas.ndormitorios, viviendas.tamano, viviendas.precio, fotos.foto FROM viviendas LEFT JOIN fotos ON viviendas.id = fotos.id_vivienda order by viviendas.fecha_anuncio DESC LIMIT " . $offset . "," . $num_ele;
         $stmt2 = $this->conn->conection()->query($pagination2);
         $stmt2->execute();
         $registro = $stmt2->fetchAll(PDO::FETCH_ASSOC);
@@ -33,7 +33,7 @@ class Pagination
     public function getPagination()
     {
 
-        $pagination = "SELECT viviendas.id, viviendas.tipo, viviendas.zona, viviendas.ndormitorios, viviendas.tamano, fotos.foto FROM viviendas LEFT JOIN fotos ON viviendas.id = fotos.id_vivienda order by viviendas.fecha_anuncio DESC;";
+        $pagination = "SELECT viviendas.id, viviendas.tipo, viviendas.zona, viviendas.ndormitorios, viviendas.tamano, viviendas.precio, fotos.foto FROM viviendas LEFT JOIN fotos ON viviendas.id = fotos.id_vivienda order by viviendas.fecha_anuncio DESC;";
         $stmt = $this->conn->conection()->prepare($pagination);
         $stmt->execute();
         $num_elementos = $stmt->rowCount();

@@ -12,8 +12,7 @@ class Pagination {
 
     public function getData($page = 1) {
 
-        
-        $pagination = "SELECT * FROM $this->tabla";
+        $pagination = "SELECT id_usuario FROM $this->tabla";
         $stmt = $this->conn->conection()->prepare($pagination);
         $stmt->execute();
         $num_elementos = $stmt->rowCount();
@@ -22,7 +21,7 @@ class Pagination {
 
         $offset = ($page - 1) * $num_ele;
 
-        $pagination2 = "SELECT * FROM $this->tabla LIMIT ".$offset.",".$num_ele;
+        $pagination2 = "SELECT id_usuario FROM $this->tabla LIMIT ".$offset.",".$num_ele;
         $stmt2 = $this->conn->conection()->query($pagination2);
         $stmt2->execute();
         $registro = $stmt2->fetchAll(PDO::FETCH_ASSOC);
@@ -30,8 +29,8 @@ class Pagination {
     }
 
     public function getPagination() {
-        echo"Hola 2";
-        $pagination = "SELECT * FROM $this->tabla";
+   
+        $pagination = "SELECT id_usuario FROM $this->tabla";
         $stmt = $this->conn->conection()->prepare($pagination);
         $stmt->execute();
         $num_elementos = $stmt->rowCount();
@@ -66,7 +65,7 @@ class Pagination {
 
 
 function printPagination($pagination, $registro) {
-    echo"Hola ";
+
     if (count($registro) > 0) {
       echo "<table>
       <thead>
@@ -97,7 +96,7 @@ function printPagination($pagination, $registro) {
   }
   
 //Prueba de paginacion en el modelo 
-//   $pagination = new Pagination('viviendas');
+//   $pagination = new Pagination('usuarios');
 //   $registro = $pagination->getData($_GET['page'] ?? 1);
 //   printPagination($pagination, $registro);
   

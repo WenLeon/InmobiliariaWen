@@ -1,3 +1,11 @@
+<?php
+session_start();
+// Comprobamos si no existe el usuario, lo redirigimos al index 
+if (!isset($_SESSION['usuario'])) {
+    header("Location:../Index.php");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -29,20 +37,42 @@
 </head>
 
 <body>
-    <header>
-        <h2>Inmobiliaria Espacio ideal</h2>
-    </header>
+    <!-- ------------------------------------------------------------------------------------ -->
+        <!-- Todo el header -->
+        <header>
+                <h2>Inmobiliaria Espacio ideal</h2>
+                <div class="encabezado">
+                    <span>Bienvenido: <?php echo $_SESSION['usuario']; ?></span>
+                    <span> <a href="../Views/ListadoVivienda.php">Inicio</a></span>
+                    <span> <a href="../Views/insertarVivienda.php">Insertar vivienda</a></span>
+                    <span> <a href="../Views/buscarVivienda.php">Buscar vivienda</a></span>
+
+                    <!-- Bonton de gestion de usuarios solo para el admin  -->
+                    <?php
+                    if (isset($_SESSION['usuario']) && $_SESSION['usuario'] == "admin") {
+                        echo '<span> <a href="../Views/UserView.php">Añadir un nuevo usuario</a></span>';
+                        echo '<span> <a href="../Views/ListadoUsuario.php">Borrar un usuario</a></span>';
+                    } ?>
+                    <!-- Bonton de ultima desconexion  -->
+                    <span>Última conexión: <?php echo $_COOKIE['lastLogin']; ?></span>
+                    <!-- Boton de cerrar session  -->
+                    <button><a href="../Models/logout.php">Cerrar sesion</a></button>
+                </div>
+            </header>
+            <!-- ------------------------------------------------------------------------------------ -->
 
     <div id="contenedor">
 
         <div class="formulario">
             <div class="contenido">
 
-                <form action="submit-form.php" method="post">
+                <form action="../Controllers/viviendaController.php" method="post">
 
+                    <label for="id">Id:</label>
+                    <input type="text" name="id" id="id">
 
-                    <label for="tipo_vivienda">Tipo de Vivienda:</label>
-                    <select name="tipo_vivienda" id="tipo_vivienda">
+                    <label for="tipo">Tipo de Vivienda:</label>
+                    <select name="tipo" id="tipo">
                         <option value="">Selecciona una opción</option>
                         <option value="piso">Piso</option>
                         <option value="chalet">Chalet</option>
@@ -98,24 +128,34 @@
                     <br><br>
 
                     <label>Extras (Marque los que preceda):</label>
-                    <input type="checkbox" id="piscina" name="extras[]" value="piscina">
+                    <input type="checkbox" id="Piscina" name="extras[]" value="Piscina">
                     <label for="piscina">Piscina</label>
 
-                    <input type="checkbox" id="jardin" name="extras[]" value="jardin">
+                    <input type="checkbox" id="Jardin" name="extras[]" value="jardin">
                     <label for="jardin">Jardín</label>
 
-                    <input type="checkbox" id="garaje" name="extras[]" value="garaje">
-                    <label for="garaje">Garaje</label>
+                    <input type="checkbox" id="Garage" name="extras[]" value="Garage">
+                    <label for="Garage">Garaje</label>
 
                     <br><br>
                     <label>Elegir archivo de foto:</label>
-                    <input type="file" id="foto" name="foto">
-                    <br><br>
-                    <label>Observaciones:</label><br>
-                    <textarea id="observaciones" name="observaciones" rows="5" cols="30"></textarea>
+                    <select name="file">
+                        <?php
+                        $folder = 'imagenes/fotos';
+                        $files = scandir($folder);
+                        foreach ($files as $file) {
+                            if ($file != '.' && $file != '..') {
+                                echo "<option value='$file'>$file</option>";
+                            }
+                        }
+                        
+                        ?>
+                        <br><br>
+                        <label>Foto</label><br>
+                        <textarea id="observaciones" name="observaciones" rows="5" cols="30"></textarea>
 
 
-                    <input type="submit" value="Enviar">
+                        <input type="submit" value="insertar" name="insertar">
 
 
                 </form>

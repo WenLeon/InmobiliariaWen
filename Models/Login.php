@@ -25,23 +25,19 @@ class Login
 
 
             if ($contra['password'] != null) {
-                // if (password_verify($contra['password'],$clave)) {
 
-                if (($contra['password'] == $clave)) {
-                    if ($usuario == 'admin') {
-                        $_SESSION['usuario'] = $usuario;
-                        header("Location:../Views/ListadoAdmin.php?");
-                    } else {
-                        $_SESSION['usuario'] = $usuario;
-                        header("Location:../Views/Listado.php?");
-                    }
+                if (password_verify($clave, $contra['password'])) {
+
+                    $_SESSION['usuario'] = $usuario;
+                    header("Location:../Views/ListadoVivienda.php?");
                 } else {
+
                     $msg = "Contraseña mal introducida";
-                    header("Location:../index.php?msg=$msg");
+                    header("Location:../Index.php?msg=$msg");
                 }
             } else {
                 $msg = "Id de usuario o usuario mal introducido";
-                header("Location:../index.php?msg=$msg");
+                header("Location:../Index.php?msg=$msg");
             }
         } catch (PDOException $e) {
             die("Error:" . $e->getMessage());
