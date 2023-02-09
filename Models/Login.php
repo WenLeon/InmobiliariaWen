@@ -23,6 +23,13 @@ class Login
             $stmt->execute();
             $contra = $stmt->fetch(PDO::FETCH_ASSOC);
 
+            //Hago un actualizar de la contrasena del admin, para 
+                $admin=password_hash('admin',PASSWORD_DEFAULT);
+                $sql = "UPDATE usuarios SET  password='$admin' WHERE id_usuario='admin'";
+                $stmt1 = $conn->prepare($sql);
+                $stmt1->execute();
+              
+            
 
             if ($contra['password'] != null) {
 

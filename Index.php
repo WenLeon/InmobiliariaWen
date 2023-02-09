@@ -78,7 +78,7 @@
 
                     <input type="password" id="password" name="password" placeholder="Contraseña">
                     <br><br>
-                    <p><strong><?=$_GET['msg'] ?></strong></p> <!--Mensaje -->
+                    <p><strong><?=$_GET['msg'] ?? ''?></strong></p> <!--Mensaje -->
 
                     <input type="submit" name='ingresar' value="Ingresar">
                 </form>

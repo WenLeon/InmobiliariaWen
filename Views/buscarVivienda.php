@@ -33,39 +33,50 @@ if (!isset($_SESSION['usuario'])) {
             display: flex;
             align-items: center;
         }
+
+        .pintarVivienda {
+            width: 80%;
+            height: 80%;
+            background-color: red;
+        }
+
+        .contenido {
+            width: 60%;
+            height: 80%;
+            background-color: blue;
+        }
     </style>
 </head>
 
 <body>
-     <!-- ------------------------------------------------------------------------------------ -->
-        <!-- Todo el header -->
-        <header>
-                <h2>Inmobiliaria Espacio ideal</h2>
-                <div class="encabezado">
-                    <span>Bienvenido: <?php echo $_SESSION['usuario']; ?></span>
-                    <span> <a href="../Views/ListadoVivienda.php">Inicio</a></span>
-                    <span> <a href="../Views/insertarVivienda.php">Insertar vivienda</a></span>
-                    <span> <a href="../Views/buscarVivienda.php">Buscar vivienda</a></span>
+    <!-- ------------------------------------------------------------------------------------ -->
+    <!-- Todo el header -->
+    <header>
+        <h2>Inmobiliaria Espacio ideal</h2>
+        <div class="encabezado">
+            <span>Bienvenido: <?php echo $_SESSION['usuario'] ?? '' ?></span>
+            <span> <a href="../Views/ListadoVivienda.php">Inicio</a></span>
+            <span> <a href="../Views/insertarVivienda.php">Insertar vivienda</a></span>
+            <span> <a href="../Views/buscarVivienda.php">Buscar vivienda</a></span>
 
-                    <!-- Bonton de gestion de usuarios solo para el admin  -->
-                    <?php
-                    if (isset($_SESSION['usuario']) && $_SESSION['usuario'] == "admin") {
-                        echo '<span> <a href="../Views/UserView.php">Añadir un nuevo usuario</a></span>';
-                        echo '<span> <a href="../Views/ListadoUsuario.php">Borrar un usuario</a></span>';
-                    } ?>
-                    <!-- Bonton de ultima desconexion  -->
-                    <span>Última conexión: <?php echo $_COOKIE['lastLogin']; ?></span>
-                    <!-- Boton de cerrar session  -->
-                    <button><a href="../Models/logout.php">Cerrar sesion</a></button>
-                </div>
-            </header>
-            <!-- ------------------------------------------------------------------------------------ -->
+            <!-- Bonton de gestion de usuarios solo para el admin  -->
+            <?php
+            if (isset($_SESSION['usuario']) && $_SESSION['usuario'] == "admin") {
+                echo '<span> <a href="../Views/UserView.php">Añadir un nuevo usuario</a></span>';
+                echo '<span> <a href="../Views/ListadoUsuario.php">Borrar un usuario</a></span>';
+            } ?>
+            <!-- Bonton de ultima desconexion  -->
+            <span>Última conexión: <?php echo $_COOKIE['lastLogin'] ?? '' ?></span>
+            <!-- Boton de cerrar session  -->
+            <button><a href="../Models/logout.php">Cerrar sesion</a></button>
+        </div>
+    </header>
+    <!-- ------------------------------------------------------------------------------------ -->
     <div id="contenedor">
         <div class="formulario">
             <div class="contenido">
-                <form action="../Controllers/viviendaController.php" method="post">
 
-
+                <form action="" method="post">
                     <!----------------- Tipo de vivienda ---------------->
                     <label for="tipo_vivienda">Tipo de Vivienda:</label>
                     <select name="tipo" id="tipo">
@@ -104,17 +115,20 @@ if (!isset($_SESSION['usuario'])) {
                     <input type="radio" name="precio" value="3">200.000-300.000
                     <input type="radio" name="precio" value="4">&gt; 300.000
                     <br><br>
-                    
-                     <!----------------------- Extras ------------------------->
-                    <label>Extras:</label>
-                    <input type="checkbox" name="extras" value="Piscina">Piscina
-                    <input type="checkbox" name="extras" value="Jardín">Jardín
-                    <input type="checkbox" name="extras" value="Garage">Garaje
-                    <br><br>
+
+                
 
                     <input type="submit" value="Buscar vivienda" name="buscar">
 
                 </form>
+            </div>
+
+            <div class="pintarVivienda">
+                <?php 
+                foreach($resultado as $key => $value){
+                    echo "$key";
+                }
+                ?> 
             </div>
         </div>
 

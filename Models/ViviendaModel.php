@@ -72,10 +72,10 @@ class ViviendaModel
     public function crearVivienda()
     {
         try {
-            $sql = "INSERT INTO " . self::TABLA . " (id, tipo, zona, direccion, ndormitorios, precio, tamano, extras) 
-                VALUES (:id, :tipo, :zona, :direccion, :ndormitorios, :precio, :tamano, :extras)";
+            $sql = "INSERT INTO " . self::TABLA . " (tipo, zona, direccion, ndormitorios, precio, tamano, extras,observaciones) 
+                VALUES (:tipo, :zona, :direccion, :ndormitorios, :precio, :tamano, :extras, :observaciones)";
             $stmt = $this->conn->conection()->prepare($sql);
-            $stmt->bindParam(':id', $this->id);
+
             $stmt->bindParam(':tipo', $this->tipo);
             $stmt->bindParam(':zona', $this->zona);
             $stmt->bindParam(':direccion', $this->direccion);
@@ -83,18 +83,24 @@ class ViviendaModel
             $stmt->bindParam(':precio', $this->precio);
             $stmt->bindParam(':tamano', $this->tamano);
             $stmt->bindParam(':extras', $this->extras);
+            $stmt->bindParam(':observaciones', $this->observaciones);
             $stmt->execute();
+    
+            $consulta = "SELECT id FROM viviendas order by id desc limit 1 ";
+            $stmt1 = $this->conn->conection()->prepare($consulta);
+            $stmt1->execute();
+            $registro = $stmt1->fetch(PDO::FETCH_ASSOC);
 
-            //$id_vivienda = $this->conn->conection()->lastInsertId();
-
-            if (isset($this->id)) {
-                $sql = "INSERT INTO fotos (id_vivienda, foto) 
-                VALUES (:id_vivienda, :foto)";
-                $stmt = $this->conn->conection()->prepare($sql);
-                $stmt->bindParam(':id_vivienda', $this->id);
-                $stmt->bindParam(':foto', $this->foto);
-                $stmt->execute();
-            }
+            if($registro['id'] != null){
+            $sql = "INSERT INTO fotos (id_vivienda, foto) 
+            VALUES (:id_vivienda, :foto)";
+            $stmt = $this->conn->conection()->prepare($sql);
+            $stmt->bindParam(':id_vivienda',$registro['id'] );
+            $stmt->bindParam(':foto', $this->foto);
+            $stmt->execute();
+         }
+                
+            
         } catch (PDOException $e) {
             echo "Conexión fallida: " . $e->getMessage();
             die();
@@ -179,6 +185,45 @@ class ViviendaModel
 
 
 
+
+
+
+
+
+
+
+// Funcion creando el id de la vivienda 
+// public function crearVivienda()
+//     {
+//         try {
+//             $sql = "INSERT INTO " . self::TABLA . " (id, tipo, zona, direccion, ndormitorios, precio, tamano, extras) 
+//                 VALUES (:id, :tipo, :zona, :direccion, :ndormitorios, :precio, :tamano, :extras)";
+//             $stmt = $this->conn->conection()->prepare($sql);
+//             $stmt->bindParam(':id', $this->id);
+//             $stmt->bindParam(':tipo', $this->tipo);
+//             $stmt->bindParam(':zona', $this->zona);
+//             $stmt->bindParam(':direccion', $this->direccion);
+//             $stmt->bindParam(':ndormitorios', $this->ndormitorios);
+//             $stmt->bindParam(':precio', $this->precio);
+//             $stmt->bindParam(':tamano', $this->tamano);
+//             $stmt->bindParam(':extras', $this->extras);
+//             $stmt->execute();
+
+//             //$id_vivienda = $this->conn->conection()->lastInsertId();
+
+//             if (isset($this->id)) {
+//                 $sql = "INSERT INTO fotos (id_vivienda, foto) 
+//                 VALUES (:id_vivienda, :foto)";
+//                 $stmt = $this->conn->conection()->prepare($sql);
+//                 $stmt->bindParam(':id_vivienda', $this->id);
+//                 $stmt->bindParam(':foto', $this->foto);
+//                 $stmt->execute();
+//             }
+//         } catch (PDOException $e) {
+//             echo "Conexión fallida: " . $e->getMessage();
+//             die();
+//         }
+//     }
 // ------------------------Pruebas en el modelo ----------------------------
 
 // $vivienda = new ViviendaModel();

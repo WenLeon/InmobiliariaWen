@@ -42,7 +42,7 @@ if (!isset($_SESSION['usuario'])) {
         <header>
                 <h2>Inmobiliaria Espacio ideal</h2>
                 <div class="encabezado">
-                    <span>Bienvenido: <?php echo $_SESSION['usuario']; ?></span>
+                    <span>Bienvenido: <?php echo $_SESSION['usuario'] ?? '' ?></span>
                     <span> <a href="../Views/ListadoVivienda.php">Inicio</a></span>
                     <span> <a href="../Views/insertarVivienda.php">Insertar vivienda</a></span>
                     <span> <a href="../Views/buscarVivienda.php">Buscar vivienda</a></span>
@@ -54,7 +54,7 @@ if (!isset($_SESSION['usuario'])) {
                         echo '<span> <a href="../Views/ListadoUsuario.php">Borrar un usuario</a></span>';
                     } ?>
                     <!-- Bonton de ultima desconexion  -->
-                    <span>Última conexión: <?php echo $_COOKIE['lastLogin']; ?></span>
+                    <span>Última conexión: <?php echo $_COOKIE['lastLogin'] ?? '' ?></span>
                     <!-- Boton de cerrar session  -->
                     <button><a href="../Models/logout.php">Cerrar sesion</a></button>
                 </div>
@@ -68,12 +68,10 @@ if (!isset($_SESSION['usuario'])) {
 
                 <form action="../Controllers/viviendaController.php" method="post">
 
-                    <label for="id">Id:</label>
-                    <input type="text" name="id" id="id">
+                
 
                     <label for="tipo">Tipo de Vivienda:</label>
                     <select name="tipo" id="tipo">
-                        <option value="">Selecciona una opción</option>
                         <option value="piso">Piso</option>
                         <option value="chalet">Chalet</option>
                         <option value="adosado">Adosado</option>
@@ -85,7 +83,6 @@ if (!isset($_SESSION['usuario'])) {
 
                     <label for="zona">Zona:</label>
                     <select name="zona" id="zona">
-                        <option value="">Selecciona una opción</option>
                         <option value="centro">Centro</option>
                         <option value="norte">Norte</option>
                         <option value="este">Este</option>
@@ -95,12 +92,12 @@ if (!isset($_SESSION['usuario'])) {
                     <br><br>
 
                     <label for="direccion">Dirección:</label>
-                    <input type="text" name="direccion" id="direccion">
+                    <input type="text" name="direccion" id="direccion" pattern="[aA-zZ 0-9]{1,100}" required>
 
                     <br><br>
 
                     <label>Número de dormitorios:</label>
-                    <input type="radio" id="dormitorios1" name="dormitorios" value="1">
+                    <input type="radio" id="dormitorios1" name="dormitorios" value="1" required>
                     <label for="dormitorios1">1</label>
 
                     <input type="radio" id="dormitorios2" name="dormitorios" value="2">
@@ -118,12 +115,12 @@ if (!isset($_SESSION['usuario'])) {
                     <br><br>
 
                     <label>Precio:</label>
-                    <input type="text" name="precio" id="precio">
+                    <input type="number" name="precio" id="precio"  required>
 
                     <br><br>
 
                     <label for="tamano">Tamaño:</label>
-                    <input type="text" name="tamano" id="tamano">
+                    <input type="text" name="tamano" id="tamano" required>
 
                     <br><br>
 
@@ -140,6 +137,7 @@ if (!isset($_SESSION['usuario'])) {
                     <br><br>
                     <label>Elegir archivo de foto:</label>
                     <select name="file">
+                    <option value="">Ninguna foto</option>
                         <?php
                         $folder = 'imagenes/fotos';
                         $files = scandir($folder);
@@ -148,13 +146,13 @@ if (!isset($_SESSION['usuario'])) {
                                 echo "<option value='$file'>$file</option>";
                             }
                         }
-                        
                         ?>
                         <br><br>
                         <label>Foto</label><br>
                         <textarea id="observaciones" name="observaciones" rows="5" cols="30"></textarea>
 
-
+                        <p><?= $_GET['msg'] ?? '' ?></p>
+                   
                         <input type="submit" value="insertar" name="insertar">
 
 

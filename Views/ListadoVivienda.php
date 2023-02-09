@@ -90,7 +90,7 @@ if (!isset($_SESSION['usuario'])) {
             <header>
                 <h2>Inmobiliaria Espacio ideal</h2>
                 <div class="encabezado">
-                    <span>Bienvenido: <?php echo $_SESSION['usuario']; ?></span>
+                    <span>Bienvenido: <?php echo $_SESSION['usuario'] ?? '' ?></span>
                     <span> <a href="../Views/ListadoVivienda.php">Inicio</a></span>
                     <span> <a href="../Views/insertarVivienda.php">Insertar vivienda</a></span>
                     <span> <a href="../Views/buscarVivienda.php">Buscar vivienda</a></span>
@@ -102,7 +102,7 @@ if (!isset($_SESSION['usuario'])) {
                         echo '<span> <a href="../Views/ListadoUsuario.php">Borrar un usuario</a></span>';
                     } ?>
                     <!-- Bonton de ultima desconexion  -->
-                    <span>Última conexión: <?php echo $_COOKIE['lastLogin']; ?></span>
+                    <span>Última conexión: <?php echo $_COOKIE['lastLogin'] ?? ''?></span>
                     <!-- Boton de cerrar session  -->
                     <button><a href="../Models/logout.php">Cerrar sesion</a></button>
                 </div>
@@ -128,11 +128,11 @@ if (!isset($_SESSION['usuario'])) {
                             ?>
                                 <tr>
                                     <?php
-                                    $contador = 1;
+                             
                                     foreach ($fila as $key => $valor) {
                                         if ($key == "foto") {
                                             echo "<td><a href='/Proyectos_2/InmobiliariaW/Views/imagenes/fotos/" . $valor . "'>" . $valor . "</a></td>";
-                                            $contador++;
+                                   
                                         } else {
                                             echo "<td>" . $valor . "</td>";
                                         }
@@ -145,7 +145,7 @@ if (!isset($_SESSION['usuario'])) {
                                         </form>
                                         <form action="../Views/updateVivienda.php" method="get">
                                             <input type="submit" name="modificar" value="modificar">
-                                            <input type="hidden" name="id" value="<?= $fila['id']; ?>">
+                                            <input type="hidden" name="id" value="<?= $fila['id'] ?>">
                                         </form>
 
                                     </td>
