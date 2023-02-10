@@ -102,7 +102,9 @@ if (!isset($_SESSION['usuario'])) {
                     if (isset($_SESSION['usuario']) && $_SESSION['usuario'] == "admin") {
                         echo '<span> <a href="../Views/UserView.php">Añadir un nuevo usuario</a></span>';
                         echo '<span> <a href="../Views/ListadoUsuario.php">Borrar un usuario</a></span>';
-                    } ?>
+                    }else{
+                        header("Location:../Views/ListadoVivienda.php");
+                      } ?>
                     <!-- Bonton de ultima desconexion  -->
                     <span>Última conexión: <?php echo $_COOKIE['lastLogin'] ?? '' ?></span>
                     <!-- Boton de cerrar session  -->

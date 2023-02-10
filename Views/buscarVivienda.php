@@ -26,7 +26,7 @@ if (!isset($_SESSION['usuario'])) {
         }
 
         .formulario {
-            width: 80%;
+            width: 100%;
             height: 80vh;
             background-color: lightblue;
             padding: 30px;
@@ -37,13 +37,27 @@ if (!isset($_SESSION['usuario'])) {
         .pintarVivienda {
             width: 80%;
             height: 80%;
-            background-color: red;
+          border-radius: 20px;
+          background-color: lightyellow;
+           
+            
         }
 
         .contenido {
             width: 60%;
             height: 80%;
-            background-color: blue;
+            display: flex;
+            justify-content: center;
+      
+        }
+
+        table{
+            border-collapse: collapse;
+            padding: 20px;
+
+        }
+        h1{
+            text-align: center;
         }
     </style>
 </head>
@@ -64,7 +78,8 @@ if (!isset($_SESSION['usuario'])) {
             if (isset($_SESSION['usuario']) && $_SESSION['usuario'] == "admin") {
                 echo '<span> <a href="../Views/UserView.php">Añadir un nuevo usuario</a></span>';
                 echo '<span> <a href="../Views/ListadoUsuario.php">Borrar un usuario</a></span>';
-            } ?>
+            }
+             ?>
             <!-- Bonton de ultima desconexion  -->
             <span>Última conexión: <?php echo $_COOKIE['lastLogin'] ?? '' ?></span>
             <!-- Boton de cerrar session  -->
@@ -116,7 +131,7 @@ if (!isset($_SESSION['usuario'])) {
                     <input type="radio" name="precio" value="4">&gt; 300.000
                     <br><br>
 
-                
+
 
                     <input type="submit" value="Buscar vivienda" name="buscar">
 
@@ -124,11 +139,32 @@ if (!isset($_SESSION['usuario'])) {
             </div>
 
             <div class="pintarVivienda">
-                <?php 
-                foreach($resultado as $key => $value){
-                    echo "$key";
+                <?php
+                if (isset($_POST['buscar'])) {
+                    require_once '../Models/ViviendaModel.php';
+                    $vivienda = new ViviendaModel();
+                    $resultado = $vivienda->obtenerPorFiltro($_POST['tipo'], $_POST['zona'], $_POST['dormitorios'], $_POST['precio']);
+                    // print_r($resultado);
+                    echo"<h1>Viviendas disponibles</h1>";
+                    //Imprimo el header 
+                    echo "<table border='1'>";
+                    $keys = array_keys($resultado[0]);
+                    foreach ($keys as $header) {
+                        echo "<th> $header </th>";
+                    }
+                    //Imprimo la tabla de resultado 
+                    foreach ($resultado as $key => $fila) {
+                        echo "<tr>";
+
+                        foreach ($fila as $value1 => $value2) {
+                           echo "<td> $value2 </td>";
+                        }
+                        echo "</tr>";
+                    }
+
+                    echo "</table>";
                 }
-                ?> 
+                ?>
             </div>
         </div>
 

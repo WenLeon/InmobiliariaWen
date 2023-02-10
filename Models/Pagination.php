@@ -64,50 +64,50 @@ class Pagination
 //     $page = $_GET['page'];
 //   } else {
 //     $page = 1;
-//   }
+//   } 
 
 
-// function printPagination($pagination, $registro)
-// {
-//         if (count($registro) > 0) {
+function printPagination($pagination, $registro)
+{
+        if (count($registro) > 0) {
         
-//           echo "<table>
-//           <thead>
-//               <tr>";
-//           $headers = array_keys($registro[0]);
-//           foreach ($headers as $header) {
-//               echo "<th>" . ucfirst($header) . "</th>";
-//           }
-//           echo "<th>Acciones</th>
-//               </tr>
-//           </thead>
-//           <tbody>";
-//           foreach ($registro as $fila) {
-//               echo "<tr>";
-//               foreach ($fila as $key => $valor) {
-//                   if ($key == "foto") {
-//                       echo "<td><a href='/Proyectos_2/InmobiliariaW/Views/imagenes/fotos/" . $valor . "'>" . $valor . "</a></td>";
-//                   } else {
-//                       echo "<td>" . $valor . "</td>";
-//                   }
-//               }
-//               echo "<td><button><a href='borrar.php?id=" . $fila['id'] . "'>Borrar</a></button>";
-//               echo "<button><a href='modificar.php?id=" . $fila['id'] . "'>Modificar</a></button></td>";
-//               echo "</tr>";
-//           }
-//           echo "
-//               </tbody>
-//           </table>
-//           ";
-//         }
+          echo "<table>
+          <thead>
+              <tr>";
+          $headers = array_keys($registro[0]);
+          foreach ($headers as $header) {
+              echo "<th>" . ucfirst($header) . "</th>";
+          }
+          echo "<th>Acciones</th>
+              </tr>
+          </thead>
+          <tbody>";
+          foreach ($registro as $fila) {
+              echo "<tr>";
+              foreach ($fila as $key => $valor) {
+                  if ($key == "foto") {
+                      echo "<td><a href='/Proyectos_2/InmobiliariaW/Views/imagenes/fotos/" . $valor . "'>" . $valor . "</a></td>";
+                  } else {
+                      echo "<td>" . $valor . "</td>";
+                  }
+              }
+              echo "<td><button><a href='borrar.php?id=" . $fila['id'] . "'>Borrar</a></button>";
+              echo "<button><a href='modificar.php?id=" . $fila['id'] . "'>Modificar</a></button></td>";
+              echo "</tr>";
+          }
+          echo "
+              </tbody>
+          </table>
+          ";
+        }
     
-//     //Pintar los botones de la paginacion 
-//     $pagination->getPagination();
-// }
+    //Pintar los botones de la paginacion 
+    $pagination->getPagination();
+}
 
 
   
-//Prueba de paginacion en el modelo 
+// //Prueba de paginacion en el modelo 
 //   $pagination = new Pagination();
 //   $registro = $pagination->getData($_GET['page'] ?? 1);
 //   printPagination($pagination, $registro);

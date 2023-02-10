@@ -15,14 +15,8 @@ class loginController
             $admin->login($user, $pssw);
         }
     }
-
 }
-
 
 $controladorLogin = new loginController();
 $controladorLogin->login();
 
-
-
-// $pag= new Controller();
-// $pag->controladorPagination();

@@ -62,6 +62,14 @@ class ViviendaModel
             $stmt->bindParam(':observaciones', $this->observaciones);
             $stmt->bindParam(':id', $this->id);
             $stmt->execute();
+
+            if(isset($this->id)){
+                $sql = "UPDATE fotos SET foto=:foto WHERE id_vivienda=:id_vivienda;";
+                $stmt = $this->conn->conection()->prepare($sql);
+                $stmt->bindParam(':id_vivienda',$this->id );
+                $stmt->bindParam(':foto', $this->foto);
+                $stmt->execute();
+             }
             echo "Se ha actualizado la vivienda <br/>";
         } catch (PDOException $e) {
             echo "Conexión fallida" . $e->getMessage();
@@ -109,7 +117,7 @@ class ViviendaModel
 
 
 
-    public function obtenerPorFiltro($tipo_vivienda, $zona, $dormitorios, $precio, $extras)
+    public function obtenerPorFiltro($tipo_vivienda, $zona, $dormitorios, $precio)
     {
         $conn = $this->conn->conection();
         $sql = "SELECT * FROM viviendas WHERE 1=1";
@@ -152,15 +160,7 @@ class ViviendaModel
         if (!empty($dormitorios)) {
             $stmt->bindParam(':dormitorios', $dormitorios, PDO::PARAM_INT);
         }
-        if (!empty($extras)) {
-            if($extras="Piscina"){
-            $stmt->bindParam(':extras', $extras, PDO::PARAM_STR);
-            }else if($extras="Jardín"){
-                $stmt->bindParam(':extras', $extras, PDO::PARAM_STR);
-            }else if($extras="Garage"){
-                $stmt->bindParam(':extras', $extras, PDO::PARAM_STR);
-            }
-        }
+       
 
         $precio1=100000;
         $precio2=200000;

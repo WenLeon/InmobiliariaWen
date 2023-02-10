@@ -1,6 +1,6 @@
 <?php
 session_start();
-// Comprobamos si no existe el usuario, lo redirigimos al index 
+
 if (!isset($_SESSION['usuario'])) {
     header("Location:../Index.php");
     exit();
@@ -16,23 +16,23 @@ if (!isset($_SESSION['usuario'])) {
     <title>Insertar vivienda</title>
     <link rel="stylesheet" href="../index.css">
     <style>
-        #contenedor {
-            width: 100%;
-            height: 100vh;
-            background-color: lightcoral;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+       #contenedor {
+      width: 100%;
+      height: 100vh;
+      background-color: lightcoral;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
-        .formulario {
-            width: 80%;
-            height: 80vh;
-            background-color: lightblue;
-            padding: 30px;
-            display: flex;
-            align-items: center;
-        }
+    .formulario {
+      width: 80%;
+      height: 80vh;
+      background-color: lightblue;
+      padding: 30px;
+      display: flex;
+      align-items: center;
+    }
     </style>
 </head>
 
@@ -109,7 +109,7 @@ if (!isset($_SESSION['usuario'])) {
                     <input type="radio" id="dormitorios4" name="dormitorios" value="4">
                     <label for="dormitorios4">4</label>
 
-                    <input type="radio" id="dormitorios5" name="dormitorios" value="5 o más">
+                    <input type="radio" id="dormitorios5" name="dormitorios" value="5">
                     <label for="dormitorios5">5 o más</label>
 
                     <br><br>
@@ -148,7 +148,7 @@ if (!isset($_SESSION['usuario'])) {
                         }
                         ?>
                         <br><br>
-                        <label>Foto</label><br>
+                        <label>observaciones</label><br>
                         <textarea id="observaciones" name="observaciones" rows="5" cols="30"></textarea>
 
                         <p><?= $_GET['msg'] ?? '' ?></p>

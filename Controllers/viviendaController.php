@@ -10,7 +10,12 @@ class viviendaController
         if (isset($_POST['actualizar'])) {
             session_start();
             $id = $_POST['id'];
-            $extras=implode(',',$_POST['extras']);
+            if(isset($extras)){
+                $extras=implode(',',$_POST['extras']);
+            }else{
+                $extras="Garage";
+            }
+            
             $vivienda = new ViviendaModel();
             $vivienda->__set('tipo', $_POST['tipo']);
             $vivienda->__set('zona', $_POST['zona']);
@@ -19,6 +24,7 @@ class viviendaController
             $vivienda->__set('precio', $_POST['precio']);
             $vivienda->__set('tamano', $_POST['tamano']);
             $vivienda->__set('extras', $extras);
+            $vivienda->__set('foto', $_POST['file']);
             $vivienda->__set('observaciones', $_POST['observaciones']);
             $vivienda->__set('id', $id);
             $vivienda->actualizar();
@@ -34,7 +40,11 @@ class viviendaController
         if (isset($_POST['insertar'])) {
 
             include '../Views/insertarVivienda.php';
-            $extras=implode(',',$_POST['extras']);
+            if(isset($extras)){
+                $extras=implode(',',$_POST['extras']);
+            }else{
+                $extras="";
+            }
             $vivienda = new ViviendaModel();
             $vivienda->__set('tipo', $_POST['tipo']);
             $vivienda->__set('zona', $_POST['zona']);
@@ -46,28 +56,30 @@ class viviendaController
             $vivienda->__set('observaciones', $_POST['observaciones']);
             $vivienda->__set('foto', $_POST['file']);
             $vivienda->crearVivienda();
-            echo"hola1";
-            $msg= "Se ha creado el registro de vivienda";
-            echo"hola2";
-            header("Location:../Views/insertarVivienda.php?msg=$msg");
-            echo"hola3";
+            
+            
+             $msg= "Se ha creado el registro de vivienda";
+             echo $msg;
+            // echo "<a href='../Views/insertarVivienda.php?msg=$msg'></a>";
+            // header("Location:../Views/insertarVivienda.php=msg$msg");
+            
         }
     }
 
 //Funcion de buscar una vivienda 
-    function searchVivienda()
-    {
+    // function searchVivienda()
+    // {
 
-        if(isset($_POST['buscar'])){
-            require_once '../Views/buscarVivienda.php';
-            echo 'entra en buscar vivienda ';
-            $vivienda = new ViviendaModel();
-            $resultado=$vivienda->obtenerPorFiltro($_POST['tipo'], $_POST['zona'], $_POST['dormitorios'], $_POST['precio'], $_POST['extras']);
-            print_r($resultado);
+    //     if(isset($_POST['buscar'])){
+    //         require_once '../Views/buscarVivienda.php';
+    //         echo 'entra en buscar vivienda ';
+    //         $vivienda = new ViviendaModel();
+    //         $resultado=$vivienda->obtenerPorFiltro($_POST['tipo'], $_POST['zona'], $_POST['dormitorios'], $_POST['precio'], $_POST['extras']);
+    //         print_r($resultado);
           
-        }
+    //     }
        
-    }
+    // }
 
 //Funcion de borrar una vivienda 
     function deleteVivienda()
@@ -90,5 +102,5 @@ $delete->deleteVivienda();
 $insert = new viviendaController();
 $insert->insertVivienda();
 
-$search = new viviendaController();
-$search->searchVivienda();
+// $search = new viviendaController();
+// $search->searchVivienda();
