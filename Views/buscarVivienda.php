@@ -139,16 +139,21 @@ if (!isset($_SESSION['usuario'])) {
             </div>
 
             <div class="pintarVivienda">
-                <?php
+            <?php
                 if (isset($_POST['buscar'])) {
                     require_once '../Models/ViviendaModel.php';
                     $vivienda = new ViviendaModel();
-                    $resultado = $vivienda->obtenerPorFiltro($_POST['tipo'], $_POST['zona'], $_POST['dormitorios'], $_POST['precio']);
-                    // print_r($resultado);
+                    $resultado=$vivienda->obtenerPorFiltro($_POST['tipo'] ?? '', $_POST['zona'] ?? '', $_POST['dormitorios'] ?? '', $_POST['precio'] ?? '', $_POST['extras']?? '');
                     echo"<h1>Viviendas disponibles</h1>";
                     //Imprimo el header 
                     echo "<table border='1'>";
-                    $keys = array_keys($resultado[0]);
+                    if (!empty($resultado) && is_array($resultado)) {
+                        $keys = array_keys($resultado[0]);
+                      } else {
+                        echo "No hay ninguna vivienda";
+                      }
+
+                      if (!empty($keys) && is_array($keys)) {
                     foreach ($keys as $header) {
                         echo "<th> $header </th>";
                     }
@@ -163,7 +168,10 @@ if (!isset($_SESSION['usuario'])) {
                     }
 
                     echo "</table>";
-                }
+                }else {
+                    echo "No hay ninguna vivienda";
+                  }
+                  }
                 ?>
             </div>
         </div>
